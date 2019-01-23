@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="pt-br" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <title>TODO</title>
+
+    <script src="https://unpkg.com/vue"></script>
+
+  </head>
+  <body>
+
+    <div id="app" class="container-fluid text-center p-0">
+      <h1 class="bg-success p-4">{{ titulo }}</h1>
+
+      <div class="row m-0">
+
+        <div class="col-lg-4">
+
+        </div>
+
+        <div class="col-lg-4 my-4">
+          <form class="">
+            <div class="form-group">
+              <input type="text" v-model="nome" class="form-control" placeholder="Nome">
+            </div>
+
+          </form>
+          <button v-on:click="TodoAdd" class="btn btn-success btn-lg btn-block">{{(this.edit === 1) ? "Editar" : "Adicionar"}}</button>
+        </div>
+
+        <div class="col-lg-4">
+
+        </div>
+        <div class="col-lg-4">
+
+        </div>
+
+        <div class="col-lg-4">
+
+            <div v-for="todo in todos" class="border rounded p-3 m-3">
+              <h5>{{ todo.nome }}</h5>
+              <button v-on:click="TodoEdit(todo)" class="btn btn-primary">Editar</button>
+              <button v-on:click="TodoRemove(todo)" class="btn btn-danger">Remover</button>
+
+
+
+            </div>
+
+        </div>
+
+
+
+    </div>
+
+    </div>
+
+
+
+    <script type="text/javascript">
+      const app = new Vue({
+        el: "#app",
+        data:{
+          titulo: "TODO VueJS",
+          edit: 0,
+          index: 0,
+          nome: '',
+          todos: []
+        },
+        methods:{
+          TodoAdd: function(){
+
+            if (!this.nome.length) { return; }
+
+            if (this.edit === 0) {
+              this.todos.push({'nome': this.nome});
+
+            } else {
+              this.todos[this.index].nome = this.nome;
+              console.log(this.index);
+              this.edit = 0
+            }
+
+            this.nome = '';
+
+          },
+          TodoRemove: function(todo){
+            const todoIndex = this.todos.indexOf(todo);
+            this.todos.splice(todoIndex, 1);
+          },
+          TodoEdit: function(todo){
+            const todoIndex = this.todos.indexOf(todo);
+            this.nome = todo.nome;
+            
+            this.index = todoIndex;
+            this.edit = 1;
+          }
+
+        }
+      })
+
+
+    </script>
+  </body>
+</html>
